@@ -47,7 +47,18 @@ def officer_login(request):
             return render(request,'officer_login.html',{'me':message})
     else: 
         return render(request,'officer_login.html')
-    
-def officer_home(request):
-    return render(request,"officer_home.html")
+
+def officer_profile(request):
+    c=request.session['cs']
+    cr=ElectionOfficer.objects.get(username=c)
+    pregno=cr.register_no
+    pname=cr.name
+    puname=cr.username
+    pemail=cr.email
+    pcontact=cr.phone_number
+    paddress=cr.address
+    pcreatedat=cr.created_at
+    return render(request,"officer_profile.html",{'regno':pregno,'name':pname,'uname':puname,'contact':pcontact,'email':pemail,'address':paddress,'created_at':pcreatedat})
+
+
 
