@@ -150,29 +150,13 @@ button{
         <div class="shape"></div>
     </div>
     <div>
-    <form action="{% url 'officer_reg' %}" method="post">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <h3>Voter Registration</h3>
+        <h3>Officer Registration</h3>
 
-        <label for="Registration No">Registration Number</label>
-        <input type="text" name="regno" placeholder="" >
+        {{ form.as_p }}
 
-        <label for="username">Full name</label>
-        <input type="text" name="rname" placeholder="" >
-
-        <label for="username">Username</label>
-        <input type="text" name="runame" placeholder="" >
-
-        <label for="username">Email</label>
-        <input type="text" name="remail" placeholder="" >
-
-        <label for="username">Phone number</label>
-        <input type="text" name="rcontact" placeholder="" >
-
-        <label for="username">Password</label>
-        <input type="text" name="rpass" placeholder="" >
-
-        <button type="submit">Log In</button>
+        <button type="submit">Register</button>
 
         <div class="social">
           <div class="go"><i class="fab"></i><a href={% url 'officer_login' %}>  New member</a></div>

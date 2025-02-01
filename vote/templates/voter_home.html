@@ -1,0 +1,13 @@
+<h2>Welcome, {{ voter.fullname }}!</h2>
+
+<p>Here are the active elections you can participate in:</p>
+<ul>
+    {% for election in active_elections %}
+        <li>
+            <strong>{{ election.name }}</strong> - Ends on {{ election.end_time }}
+            <a href="{% url 'cast_vote' election.id %}">Cast Your Vote</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'voter_login' %}">Logout</a>

@@ -21,27 +21,20 @@ from django.urls import path
 urlpatterns = [
     path('',views.index,name='index'),
     path('officer_home/',views.officer_home,name='officer_home'),
-    
-    path('voter_register/', views.voter_registration, name='voter_register'),
-    path('officer_register/', views.officer_registration, name='officer_register'),
-    path('voter_login/', views.voter_login, name='voter_login'),
-    path('officer_login/', views.officer_login, name='officer_login'),
-    path('voter_home/', views.voter_home, name='voter_home'),
-    path('officer_dashboard/', views.officer_dashboard, name='officer_dashboard'),
-    
+    path('voter_home/',views.voter_home,name='voter_home'),
     
     
     
     
     #voter
     path('voter_login/',views.voter_login,name='voter_login'),
-    
+    path('voter_reg/',views.voter_reg,name='voter_reg'),
     
     #officer
     path('officer_login/',views.officer_login,name='officer_login'),
-    
+    path('officer_reg/',views.officer_reg,name='officer_reg'),
     path('officer_home/',views.officer_home,name='officer_home'),
-    
+    path('officer_profile/',views.officer_profile,name='officer_profile'),
     
     
     path('add_voter/', views.add_voter, name='add_voter'),

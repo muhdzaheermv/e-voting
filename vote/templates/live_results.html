@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Election Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .results-table th, .results-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .results-table th {
+            background-color: #f4f4f4;
+        }
+        .live-badge {
+            background-color: #e74c3c;
+            color: white;
+            font-size: 12px;
+            padding: 3px 6px;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+        .countdown {
+            color: #2980b9;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        // Function to fetch live results via AJAX
+        async function fetchLiveResults() {
+            const response = await fetch(window.location.href + "data/"); // URL to fetch live data
+            const data = await response.json();
+
+            // Update results table
+            const tableBody = document.getElementById("results-tbody");
+            tableBody.innerHTML = ""; // Clear current rows
+
+            data.candidates.forEach(candidate => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${candidate.name}</td>
+                    <td>${candidate.party || "Independent"}</td>
+                    <td>${candidate.votes}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            // Update countdown
+            document.getElementById("countdown").textContent = data.time_remaining;
+
+            // Update periodically
+            setTimeout(fetchLiveResults, 5000); // Refresh every 5 seconds
+        }
+
+        // Start polling when the page loads
+        window.onload = fetchLiveResults;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Live Election Results</h1>
+        <p><span class="live-badge">Live</span></p>
+        
+        <!-- Election Summary -->
+        <div class="election-summary">
+            <h2>{{ election.name }}</h2>
+            <p>{{ election.description }}</p>
+            <p>End Time: {{ election.end_time }}</p>
+            <p>Time Remaining: <span class="countdown" id="countdown"></span></p>
+        </div>
+
+        <!-- Live Results Table -->
+        <h3>Results</h3>
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>Candidate</th>
+                    <th>Party</th>
+                    <th>Votes Received</th>
+                </tr>
+            </thead>
+            <tbody id="results-tbody">
+                <!-- Rows will be dynamically populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

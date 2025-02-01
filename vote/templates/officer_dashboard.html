@@ -1,0 +1,21 @@
+<h2>Welcome, {{ officer.fullname }}!</h2>
+
+<p>Here is a summary of your elections:</p>
+<table>
+    <thead>
+        <tr>
+            <th>Election</th>
+            <th>Votes Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for data in election_data %}
+            <tr>
+                <td>{{ data.election.name }}</td>
+                <td>{{ data.votes_count }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'officer_login' %}">Logout</a>

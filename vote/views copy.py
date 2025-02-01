@@ -42,7 +42,6 @@ def voter_login(request):
         try:
             voter = Voter.objects.get(username=username)
             if check_password(password, voter.password):
-                request.session['voter_username'] = voter.username
                 return redirect('voter_home')
             else:
                 return render(request, 'voter_login.html', {'error': 'Invalid credentials'})
@@ -58,69 +57,12 @@ def officer_login(request):
         try:
             officer = ElectionOfficer.objects.get(username=username)
             if check_password(password, officer.password):
-                request.session['officer_username'] = officer.username
                 return redirect('officer_dashboard')
             else:
                 return render(request, 'officer_login.html', {'error': 'Invalid credentials'})
         except ElectionOfficer.DoesNotExist:
             return render(request, 'officer_login.html', {'error': 'Invalid credentials'})
     return render(request, 'officer_login.html')
-
-def voter_home(request):
-    # Assuming you have a logged-in voter (session-based authentication)
-    voter_username = request.session.get('voter_username')
-    
-    if not voter_username:
-        return redirect('voter_login')  # Redirect to login if not logged in
-
-    # Fetch the voter details
-    try:
-        voter = Voter.objects.get(username=voter_username)
-    except Voter.DoesNotExist:
-        return redirect('voter_login')
-
-    # Retrieve active elections (customize as per your election logic)
-    active_elections = Election.objects.filter(is_active=True)
-
-    return render(request, 'voter_home.html', {
-        'voter': voter,
-        'active_elections': active_elections,
-    })
-    
-def officer_dashboard(request):
-    # Assuming you have a logged-in officer (session-based authentication)
-    officer_username = request.session.get('officer_username')
-    
-    if not officer_username:
-        return redirect('officer_login')  # Redirect to login if not logged in
-
-    # Fetch the officer details
-    try:
-        officer = ElectionOfficer.objects.get(username=officer_username)
-    except ElectionOfficer.DoesNotExist:
-        return redirect('officer_login')
-
-    # Retrieve all elections created by the officer (customize logic as needed)
-    elections = Election.objects.filter(created_by=officer)
-
-    # Aggregate voting data for display
-    election_data = []
-    for election in elections:
-        votes_count = Vote.objects.filter(election=election).count()
-        election_data.append({
-            'election': election,
-            'votes_count': votes_count,
-        })
-
-    return render(request, 'officer_dashboard.html', {
-        'officer': officer,
-        'election_data': election_data,
-    })
-    
-def logout(request):
-    request.session.flush()  # Clears the session
-    return redirect('voter_login')  # Redirect to voter login (or officer login)
-
 
 # def voter_reg(request):
 #     return render(request,"voter_reg.html")

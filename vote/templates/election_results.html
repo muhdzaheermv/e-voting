@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        .election-details {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .results-table th, .results-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .results-table th {
+            background-color: #f4f4f4;
+        }
+        .winner {
+            color: #27ae60;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Election Results</h1>
+        
+        <!-- Election Details -->
+        <div class="election-details">
+            <h2>{{ election.name }}</h2>
+            <p>{{ election.description }}</p>
+            <p><strong>Start Time:</strong> {{ election.start_time }}</p>
+            <p><strong>End Time:</strong> {{ election.end_time }}</p>
+            <p>
+                <strong>Status:</strong> 
+                {% if election.is_ongoing %}
+                    Ongoing
+                {% else %}
+                    Concluded
+                {% endif %}
+            </p>
+        </div>
+        
+        <!-- Results Table -->
+        <h3>Results</h3>
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>Candidate</th>
+                    <th>Party</th>
+                    <th>Votes Received</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for candidate in candidates %}
+                    <tr {% if candidate.is_winner %} class="winner" {% endif %}>
+                        <td>{{ candidate.name }}</td>
+                        <td>{{ candidate.party }}</td>
+                        <td>{{ candidate.votes }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <!-- Winner -->
+        {% if winner %}
+            <h3>Winner: <span class="winner">{{ winner.name }}</span></h3>
+            <p>Party: {{ winner.party }}</p>
+            <p>Votes: {{ winner.votes }}</p>
+        {% else %}
+            <p>No winner yet, the election is still ongoing.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -61,7 +61,7 @@ body{
     bottom: -80px;
 }
 form{
-    height: 720px;
+    height: 20px;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
@@ -149,25 +149,18 @@ button{
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
-    <form>
+    <div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
         <h3>Voter Registration</h3>
 
-        <label for="username">Username</label>
-        <input type="text" placeholder="Email or Phone" id="username">
+        {{ form.as_p }}
 
-        <label for="username">Username</label>
-        <input type="text" placeholder="Email or Phone" id="username">
+        <button type="submit">Register</button>
 
-        <label for="username">Username</label>
-        <input type="text" placeholder="Email or Phone" id="username">
-
-        <label for="password">Password</label>
-        <input type="password" placeholder="Password" id="password">
-
-        <button>Log In</button>
         <div class="social">
-          <div class="go"><i class="fab"></i><a href="voter_reg/">  New member</a></div>
-          <div class="fb"><i class="fab"></i><a href="officer_reg/">  Officer reg</a></div>
+          <div class="go"><i class="fab"></i><a href={% url 'voter_register' %}>  New member</a></div>
+          <div class="fb"><i class="fab"></i><a href={% url 'voter_login' %}>  Voter Login</a></div>
         </div>
     </form>
 </body>

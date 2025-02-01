@@ -1,0 +1,22 @@
+<!-- view_elections.html -->
+<h2>View Elections</h2>
+
+{% if error %}
+    <p>{{ error }}</p>
+{% endif %}
+
+<form method="POST">
+  {% csrf_token %}
+  <label for="mobile_number">Enter your Mobile Number:</label>
+  <input type="text" name="mobile_number" required>
+  <button type="submit">Check Eligibility</button>
+</form>
+
+{% if eligible_elections %}
+    <h3>Eligible Elections:</h3>
+    <ul>
+    {% for election in eligible_elections %}
+        <li><a href="{% url 'cast_vote' election.id %}">{{ election.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}

@@ -149,19 +149,24 @@ button{
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
-    <form>
-        <h3>Voter Login</h3>
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <h3>Officer Login</h3>
+
 
         <label for="username">Username</label>
-        <input type="text" placeholder="Email or Phone" id="username">
+        <input type="text" name="username" required>
 
         <label for="password">Password</label>
-        <input type="password" placeholder="Password" id="password">
+        <input type="password" name="password" required>
 
-        <button>Log In</button>
+        <button type="submit">Log In</button>
         <div class="social">
-          <div class="go"><i class="fab"></i><a href={% url 'voter_reg' %}>  New member</a></div>
-          <div class="fb"><i class="fab"></i><a href={% url 'officer_login' %}>  Officer Login</a></div>
+          <div class="go"><i class="fab"></i><a href={% url 'voter_register' %}>  New member</a></div>
+          <div class="fb"><i class="fab"></i><a href={% url 'voter_login' %}>  Voter Login</a></div>
         </div>
     </form>
 </body>

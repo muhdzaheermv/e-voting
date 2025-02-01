@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor Voting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .summary-box {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            margin-bottom: 20px;
+        }
+        .voting-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .voting-table th, .voting-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .voting-table th {
+            background-color: #f4f4f4;
+        }
+        .total-votes {
+            font-size: 18px;
+            color: #2980b9;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Monitor Voting</h1>
+
+        <!-- Election Summary -->
+        <div class="summary-box">
+            <h2>{{ election.name }}</h2>
+            <p><strong>Description:</strong> {{ election.description }}</p>
+            <p><strong>Start Time:</strong> {{ election.start_time }}</p>
+            <p><strong>End Time:</strong> {{ election.end_time }}</p>
+        </div>
+
+        <!-- Voting Table -->
+        <h3>Live Voting Data</h3>
+        <table class="voting-table">
+            <thead>
+                <tr>
+                    <th>Candidate</th>
+                    <th>Party</th>
+                    <th>Votes Received</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for candidate in candidates %}
+                <tr>
+                    <td>{{ candidate.name }}</td>
+                    <td>{{ candidate.party|default:"Independent" }}</td>
+                    <td>{{ candidate.votes }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Total Votes -->
+        <p class="total-votes">Total Votes Cast: {{ total_votes }}</p>
+    </div>
+</body>
+</html>

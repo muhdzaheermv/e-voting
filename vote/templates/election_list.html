@@ -1,0 +1,25 @@
+<!-- elections/election_list.html -->
+<h2>All Elections</h2>
+<ul>
+    {% for election in elections %}
+        <li>
+            <strong>{{ election.name }}</strong> 
+            <p>{{ election.description }}</p>
+            <p>Start: {{ election.start_time }} | End: {{ election.end_time }}</p>
+            
+            <!-- Button to manage candidates for this election -->
+            <a href="{% url 'manage_candidates' election.id %}">
+                <button>Manage Candidates</button>
+            </a><br><br>
+            <a href="{% url 'monitor_voting' election.id %}">
+                <button>monitor_voting</button>
+            </a><br><br>
+            <a href="{% url 'election_results' election.id %}">
+                <button>election_results</button>
+            </a><br><br>
+            <a href="{% url 'live_results' election.id %}">
+                <button>live_results</button>
+            </a><br>
+        </li>
+    {% endfor %}
+</ul>

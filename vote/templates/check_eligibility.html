@@ -1,0 +1,17 @@
+<!-- check_eligibility.html -->
+<h2>Check Eligibility</h2>
+
+{% if error %}
+    <p>{{ error }}</p>
+{% endif %}
+
+{% if voter %}
+    <p>You are {% if eligible %} eligible {% else %} not eligible {% endif %} to vote.</p>
+{% else %}
+    <form method="POST">
+      {% csrf_token %}
+      <label for="mobile_number">Enter your Mobile Number:</label>
+      <input type="text" name="mobile_number" required>
+      <button type="submit">Check</button>
+    </form>
+{% endif %}

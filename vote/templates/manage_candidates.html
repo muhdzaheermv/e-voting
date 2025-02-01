@@ -1,0 +1,18 @@
+<h2>Manage Candidates for {{ election.name }}</h2>
+<form method="POST">
+  {% csrf_token %}
+  <label for="name">Candidate Name:</label>
+  <input type="text" name="name" required>
+  
+  <label for="party">Party:</label>
+  <input type="text" name="party">
+  
+  <button type="submit">Add Candidate</button>
+</form>
+
+<h3>Existing Candidates:</h3>
+<ul>
+  {% for candidate in candidates %}
+    <li>{{ candidate.name }} - {{ candidate.party }}</li>
+  {% endfor %}
+</ul>
